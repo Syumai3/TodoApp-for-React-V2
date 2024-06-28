@@ -34,6 +34,12 @@ function App() {
     setNewTodoTitle("");
   };
 
+  // Todoリストを削除する関数
+  const handleDeleteTodo = (id: number) => {
+    const filteredTodos = todos.filter((todo) => todo.id !== id);
+    setTodos(filteredTodos);
+  };
+
   return (
     <div style={{ paddingLeft: "10px" }}>
       <h1>Todoリスト</h1>
@@ -51,14 +57,18 @@ function App() {
         <FilterTodo />
       </div>
       <div>
-        <TodoList todos={todos} />
+        <TodoList todos={todos} deleteTodo={handleDeleteTodo} />
       </div>
     </div>
   );
 }
 
+type TodoListProps = {
+  todos: Todotype[];
+  deleteTodo: (id: number) => void;
+};
 // Todoリストを表示するコンポーネント
-function TodoList({ todos }: { todos: Todotype[] }) {
+function TodoList({ todos, deleteTodo }: TodoListProps) {
   return (
     <ul>
       {todos.map((todo) => (
@@ -72,7 +82,7 @@ function TodoList({ todos }: { todos: Todotype[] }) {
           <span style={{ marginRight: "10px" }}>{todo.status}</span>
           <span style={{ marginRight: "10px" }}>{todo.title}</span>
           <button>編集</button>
-          <button>削除</button>
+          <button onClick={() => deleteTodo(todo.id)}>削除</button>
         </li>
       ))}
     </ul>
