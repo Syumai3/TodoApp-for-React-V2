@@ -1,25 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
 import { Todotype } from "../type/Todotype";
-
-function App() {
-  return (
-    <div style={{ paddingLeft: "10px" }}>
-      <h1>Todoリスト</h1>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "flex-start",
-        }}
-      >
-        <AddTodo />
-        <FilterTodo />
-      </div>
-      <div>
-        <TodoList todos={mockTodos} />
-      </div>
-    </div>
-  );
-}
 
 const mockTodos: Todotype[] = [
   {
@@ -33,6 +13,27 @@ const mockTodos: Todotype[] = [
     status: "未着手",
   },
 ];
+
+function App() {
+  const [todos, setTodos] = useState(mockTodos);
+  return (
+    <div style={{ paddingLeft: "10px" }}>
+      <h1>Todoリスト</h1>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-start",
+        }}
+      >
+        <AddTodo />
+        <FilterTodo />
+      </div>
+      <div>
+        <TodoList todos={todos} />
+      </div>
+    </div>
+  );
+}
 
 // Todoリストを表示するコンポーネント
 function TodoList({ todos }: { todos: Todotype[] }) {
