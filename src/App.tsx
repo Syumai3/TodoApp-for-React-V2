@@ -29,7 +29,7 @@ function App() {
 
   // Todoリストに 入力した Todoを追加する関数
   const handleAddTodo = () => {
-    setTodos([...todos, { id: todoId, title: newTodoTitle, status: "未着手" }]);
+    setTodos([{ id: todoId, title: newTodoTitle, status: "未着手" }, ...todos]);
     setTodoId(todoId + 1);
     setNewTodoTitle("");
   };
