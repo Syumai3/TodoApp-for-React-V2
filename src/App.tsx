@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Todotype } from "../type/Todotype";
 
 const mockTodos: Todotype[] = [
@@ -15,7 +15,25 @@ const mockTodos: Todotype[] = [
 ];
 
 function App() {
-  const [todos, setTodos] = useState(mockTodos);
+  // Todoリストに表示される todo の状態
+  const [todos, setTodos] = useState<Todotype[]>(mockTodos);
+  // 新しく追加する todo の状態
+  const [newTodoTitle, setNewTodoTitle] = useState("");
+  // 新しく追加する todo の id の状態
+  const [todoId, setTodoId] = useState(3);
+
+  // Todo の追加フィールドの入力をする関数
+  const handleAddTodoInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewTodoTitle(e.target.value);
+  };
+
+  // Todoリストに 入力した Todoを追加する関数
+  const handleAddTodo = () => {
+    setTodos([...todos, { id: todoId, title: newTodoTitle, status: "未着手" }]);
+    setTodoId(todoId + 1);
+    setNewTodoTitle("");
+  };
+
   return (
     <div style={{ paddingLeft: "10px" }}>
       <h1>Todoリスト</h1>
@@ -25,7 +43,11 @@ function App() {
           justifyContent: "flex-start",
         }}
       >
-        <AddTodo />
+        <AddTodo
+          addTodoInput={handleAddTodoInput}
+          newTodoTitle={newTodoTitle}
+          addTodo={handleAddTodo}
+        />
         <FilterTodo />
       </div>
       <div>
@@ -57,13 +79,25 @@ function TodoList({ todos }: { todos: Todotype[] }) {
   );
 }
 
+// Todoを追加するコンポーネントの型情報
+type AddTodoProps = {
+  addTodoInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  newTodoTitle: string;
+  addTodo: () => void;
+};
+
 // Todoを追加するコンポーネント
-function AddTodo() {
+function AddTodo({ addTodoInput, newTodoTitle, addTodo }: AddTodoProps) {
   return (
     <>
       <div>
-        <input type="text" style={{ marginRight: "5px" }} />
-        <button>追加</button>
+        <input
+          type="text"
+          style={{ marginRight: "5px" }}
+          value={newTodoTitle}
+          onChange={addTodoInput}
+        />
+        <button onClick={addTodo}>追加</button>
       </div>
     </>
   );
