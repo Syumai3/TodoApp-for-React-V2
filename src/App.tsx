@@ -69,16 +69,22 @@ function AddTodo() {
   );
 }
 
+const filterOptions = [
+  { value: "all", label: "すべて" },
+  { value: "notStarted", label: "未着手" },
+  { value: "inProgress", label: "作業中" },
+  { value: "done", label: "完了" },
+];
+
 // Todoをフィルタリングするコンポーネント
 function FilterTodo() {
   return (
     <>
-      <input type="checkbox" id="未着手" />
-      <label htmlFor="未着手">未着手</label>
-      <input type="checkbox" id="進行中" />
-      <label htmlFor="未着手">進行中</label>
-      <input type="checkbox" id="完了" />
-      <label htmlFor="未着手">完了</label>
+      <select>
+        {filterOptions.map(({ value, label }) => (
+          <option value={value}>{label}</option>
+        ))}
+      </select>
     </>
   );
 }
