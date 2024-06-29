@@ -133,17 +133,4 @@ function FilterTodo() {
   );
 }
 
-// Todoを編集するコンポーネント(編集ボタンを押下した後に開く)
-function EditTodo() {
-  return (
-    <>
-      <div>
-        <input type="text" style={{ marginRight: "5px" }} />
-        <button>保存</button>
-        <button>キャンセル</button>
-      </div>
-    </>
-  );
-}
-
 export default App;
