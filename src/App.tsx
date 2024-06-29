@@ -33,9 +33,17 @@ function App() {
 
   // Todoリストに 入力した Todoを追加する関数
   const handleAddTodo = () => {
-    setTodos([{ id: todoId, title: newTodoTitle, status: "未着手" }, ...todos]);
-    setTodoId(todoId + 1);
-    setNewTodoTitle("");
+    // 空欄の場合は Todoを追加できないようにする
+    if (newTodoTitle === "") {
+      return;
+    } else {
+      setTodos([
+        { id: todoId, title: newTodoTitle, status: "未着手" },
+        ...todos,
+      ]);
+      setTodoId(todoId + 1);
+      setNewTodoTitle("");
+    }
   };
 
   // Todoリストを削除する関数
