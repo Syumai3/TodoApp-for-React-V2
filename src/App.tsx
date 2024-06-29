@@ -25,6 +25,19 @@ function App() {
   const [editingTodoId, setEditingTodoId] = useState<number | null>(null);
   // 編集する todo のタイトルの状態
   const [editTodoTitle, setEditTodoTitle] = useState("");
+  // フィルターされた todoの状態
+  const [filteredTodos, setFilteredTodos] = useState<Todotype[]>(mockTodos);
+  // フィルターの状態
+  const [filterStatus, setFilterStatus] = useState("全て");
+
+  // todos, filterStatus　が変更するたびに、処理を走らせることで、最新のTodoリストの状態を表示する
+  useEffect(() => {
+    if (filterStatus === "全て") {
+      setFilteredTodos(todos);
+    } else {
+      setFilteredTodos(todos.filter((todo) => todo.status === filterStatus));
+    }
+  }, [todos, filterStatus]);
 
   // Todo の追加フィールドの入力をする関数
   const handleAddTodoInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -81,6 +94,11 @@ function App() {
     );
   };
 
+  // 選択されたステータスになるように、filterStatusを更新する関数
+  const handleFilterTodo = (status: StatusType) => {
+    setFilterStatus(status);
+  };
+
   return (
     <div style={{ paddingLeft: "10px" }}>
       <h1>Todoリスト</h1>
@@ -95,11 +113,12 @@ function App() {
           newTodoTitle={newTodoTitle}
           addTodo={handleAddTodo}
         />
-        <FilterTodo />
+        <span>絞り込み：</span>
+        <FilterTodo filterTodo={handleFilterTodo} />
       </div>
       <div>
         <TodoList
-          todos={todos}
+          todos={filteredTodos} // フィルタリングされたtodoリストを渡す
           deleteTodo={handleDeleteTodo}
           editingTodoId={editingTodoId}
           editTodoTitle={editTodoTitle}
@@ -204,21 +223,18 @@ function AddTodo({ addTodoInput, newTodoTitle, addTodo }: AddTodoProps) {
   );
 }
 
-const filterOptions = [
-  { value: "all", label: "すべて" },
-  { value: "notStarted", label: "未着手" },
-  { value: "inProgress", label: "作業中" },
-  { value: "done", label: "完了" },
-];
-
+type FilterTodoProps = {
+  filterTodo: (status: StatusType) => void;
+};
 // Todoをフィルタリングするコンポーネント
-function FilterTodo() {
+function FilterTodo({ filterTodo }: FilterTodoProps) {
   return (
     <>
-      <select>
-        {filterOptions.map(({ value, label }) => (
-          <option value={value}>{label}</option>
-        ))}
+      <select onChange={(e) => filterTodo(e.target.value as StatusType)}>
+        <option value="全て">全て</option>
+        <option value="未着手">未着手</option>
+        <option value="進行中">進行中</option>
+        <option value="完了">完了</option>
       </select>
     </>
   );
