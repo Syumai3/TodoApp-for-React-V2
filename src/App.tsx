@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StatusType, Todotype } from "../type/Todotype";
+import { FilterStatusType, StatusType, Todotype } from "../type/Todotype";
 
 const mockTodos: Todotype[] = [
   {
@@ -95,7 +95,7 @@ function App() {
   };
 
   // 選択されたステータスになるように、filterStatusを更新する関数
-  const handleFilterTodo = (status: StatusType) => {
+  const handleFilterTodo = (status: FilterStatusType) => {
     setFilterStatus(status);
   };
 
@@ -224,13 +224,13 @@ function AddTodo({ addTodoInput, newTodoTitle, addTodo }: AddTodoProps) {
 }
 
 type FilterTodoProps = {
-  filterTodo: (status: StatusType) => void;
+  filterTodo: (status: FilterStatusType) => void;
 };
 // Todoをフィルタリングするコンポーネント
 function FilterTodo({ filterTodo }: FilterTodoProps) {
   return (
     <>
-      <select onChange={(e) => filterTodo(e.target.value as StatusType)}>
+      <select onChange={(e) => filterTodo(e.target.value as FilterStatusType)}>
         <option value="全て">全て</option>
         <option value="未着手">未着手</option>
         <option value="進行中">進行中</option>
