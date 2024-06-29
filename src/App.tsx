@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Todotype } from "../type/Todotype";
+import { StatusType, Todotype } from "../type/Todotype";
 
 const mockTodos: Todotype[] = [
   {
@@ -74,6 +74,13 @@ function App() {
     setEditingTodoId(null);
   };
 
+  // Todo のステータスを変更する関数
+  const handleEditStatus = (id: number, status: StatusType) => {
+    setTodos(
+      todos.map((todo) => (todo.id === id ? { ...todo, status: status } : todo))
+    );
+  };
+
   return (
     <div style={{ paddingLeft: "10px" }}>
       <h1>Todoリスト</h1>
@@ -100,6 +107,7 @@ function App() {
           openEditForm={handleOpenEditForm}
           closeEditForm={handleCloseEditForm}
           editTodo={handleEditTodo}
+          editStatus={handleEditStatus}
         />
       </div>
     </div>
@@ -115,6 +123,7 @@ type TodoListProps = {
   openEditForm: (id: number, title: string) => void;
   closeEditForm: () => void;
   editTodo: (id: number) => void;
+  editStatus: (id: number, status: StatusType) => void;
 };
 // Todoリストを表示するコンポーネント
 function TodoList({
@@ -126,6 +135,7 @@ function TodoList({
   openEditForm,
   closeEditForm,
   editTodo,
+  editStatus,
 }: TodoListProps) {
   return (
     <ul>
@@ -146,7 +156,17 @@ function TodoList({
               justifyContent: "flex-start",
             }}
           >
-            <span style={{ marginRight: "10px" }}>{todo.status}</span>
+            <select
+              value={todo.status}
+              onChange={(e) =>
+                editStatus(todo.id, e.target.value as StatusType)
+              }
+              style={{ marginRight: "10px" }}
+            >
+              <option value="未着手">未着手</option>
+              <option value="進行中">進行中</option>
+              <option value="完了">完了</option>
+            </select>
             <span style={{ marginRight: "10px" }}>{todo.title}</span>
             {/* handleOpenEditForm の処理を実行 */}
             <button onClick={() => openEditForm(todo.id, todo.title)}>
