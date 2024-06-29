@@ -1,5 +1,7 @@
 export type Todotype = {
   id: number;
   title: string;
-  status: "未着手" | "進行中" | "完了";
+  status: StatusType;
 };
+
+export type StatusType = "未着手" | "進行中" | "完了";
