@@ -1,22 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { FilterStatusType, StatusType, Todotype } from "../type/Todotype";
 
-const mockTodos: Todotype[] = [
-  {
-    id: 1,
-    title: "サブスクリプションを解約する",
-    status: "進行中",
-  },
-  {
-    id: 2,
-    title: "夕ご飯の食材をスーパーに買いに行く",
-    status: "未着手",
-  },
-];
-
 function App() {
   // Todoリストに表示される todo の状態
-  const [todos, setTodos] = useState<Todotype[]>(mockTodos);
+  const [todos, setTodos] = useState<Todotype[]>([]);
   // 新しく追加する todo の状態
   const [newTodoTitle, setNewTodoTitle] = useState("");
   // 新しく追加する todo の id の状態
@@ -26,7 +13,7 @@ function App() {
   // 編集する todo のタイトルの状態
   const [editTodoTitle, setEditTodoTitle] = useState("");
   // フィルターされた todoの状態
-  const [filteredTodos, setFilteredTodos] = useState<Todotype[]>(mockTodos);
+  const [filteredTodos, setFilteredTodos] = useState<Todotype[]>([]);
   // フィルターの状態
   const [filterStatus, setFilterStatus] = useState("全て");
 
