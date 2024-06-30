@@ -4,7 +4,8 @@ import { TodoList } from "./components/TodoList";
 import { AddTodo } from "./components/AddTodo";
 import { FilterTodo } from "./components/FilterTodo";
 import { addTodoState } from "./states/addTodoState";
-import { RecoilRoot, useRecoilState } from "recoil";
+import { RecoilRoot, useRecoilState, useRecoilValue } from "recoil";
+import { todoStateLength } from "./states/todoStateLength";
 
 function App() {
   // Todoリストに表示される todo の状態
@@ -17,6 +18,9 @@ function App() {
   const [filteredTodos, setFilteredTodos] = useState<Todotype[]>([]);
   // フィルターの状態
   const [filterStatus, setFilterStatus] = useState("全て");
+
+  // recoilでタスクリストにあるタスクの数を取得
+  const todoLength = useRecoilValue(todoStateLength);
 
   // todos, filterStatus　が変更するたびに、処理を走らせることで、最新のTodoリストの状態を表示する
   useEffect(() => {
@@ -97,6 +101,7 @@ function App() {
   return (
     <div style={{ paddingLeft: "10px" }}>
       <h1>Todoリスト</h1>
+      <span>Todoリストにあるタスク数 : {todoLength}</span>
       <div
         style={{
           display: "flex",
