@@ -3,14 +3,14 @@ import { StatusType, Todotype } from "../../type/Todotype";
 
 type TodoListProps = {
   todos: Todotype[];
-  deleteTodo: (id: number) => void;
-  editingTodoId: number | null;
+  deleteTodo: (id: string) => void;
+  editingTodoId: string | null;
   editTodoTitle: string;
   editTodoInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  openEditForm: (id: number, title: string) => void;
+  openEditForm: (id: string, title: string) => void;
   closeEditForm: () => void;
-  editTodo: (id: number) => void;
-  editStatus: (id: number, status: StatusType) => void;
+  editTodo: (id: string) => void;
+  editStatus: (id: string, status: StatusType) => void;
 };
 
 // Todoリストを表示するコンポーネント

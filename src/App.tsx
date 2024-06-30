@@ -3,16 +3,15 @@ import { FilterStatusType, StatusType, Todotype } from "../type/Todotype";
 import { TodoList } from "./components/TodoList";
 import { AddTodo } from "./components/AddTodo";
 import { FilterTodo } from "./components/FilterTodo";
+import { v4 as uuidv4 } from "uuid";
 
 function App() {
   // Todoリストに表示される todo の状態
   const [todos, setTodos] = useState<Todotype[]>([]);
   // 新しく追加する todo の状態
   const [newTodoTitle, setNewTodoTitle] = useState("");
-  // 新しく追加する todo の id の状態
-  const [todoId, setTodoId] = useState(3);
   // 編集中の todo の id の状態
-  const [editingTodoId, setEditingTodoId] = useState<number | null>(null);
+  const [editingTodoId, setEditingTodoId] = useState<string | null>(null);
   // 編集する todo のタイトルの状態
   const [editTodoTitle, setEditTodoTitle] = useState("");
   // フィルターされた todoの状態
@@ -41,16 +40,15 @@ function App() {
       return;
     } else {
       setTodos([
-        { id: todoId, title: newTodoTitle, status: "未着手" },
+        { id: uuidv4(), title: newTodoTitle, status: "未着手" },
         ...todos,
       ]);
-      setTodoId(todoId + 1);
       setNewTodoTitle("");
     }
   };
 
   // Todoリストを削除する関数
-  const handleDeleteTodo = (id: number) => {
+  const handleDeleteTodo = (id: string) => {
     const filteredTodos = todos.filter((todo) => todo.id !== id);
     setTodos(filteredTodos);
   };
@@ -61,7 +59,7 @@ function App() {
   };
 
   // 編集したtodoを todoリストに反映させる処理
-  const handleEditTodo = (id: number) => {
+  const handleEditTodo = (id: string) => {
     setTodos(
       // 既存のtodosをmapし、引数の id と一致した todo の title を、editTodoTitleに変更する処理
       todos.map((todo) =>
@@ -75,7 +73,7 @@ function App() {
   };
 
   // 編集ボタンを押下した時に、編集フォームを表示させる関数 (id と title を受け取って、editingTodoId と　editTodoTitle　の状態を変更する)
-  const handleOpenEditForm = (id: number, title: string) => {
+  const handleOpenEditForm = (id: string, title: string) => {
     setEditingTodoId(id);
     setEditTodoTitle(title);
   };
@@ -86,7 +84,7 @@ function App() {
   };
 
   // Todo のステータスを変更する関数
-  const handleEditStatus = (id: number, status: StatusType) => {
+  const handleEditStatus = (id: string, status: StatusType) => {
     setTodos(
       todos.map((todo) => (todo.id === id ? { ...todo, status: status } : todo))
     );

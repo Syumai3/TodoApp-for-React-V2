@@ -1,5 +1,5 @@
 export type Todotype = {
-  id: number;
+  id: string;
   title: string;
   status: StatusType;
 };
