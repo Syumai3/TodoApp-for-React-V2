@@ -4,7 +4,7 @@ import { TodoList } from "./components/TodoList";
 import { AddTodo } from "./components/AddTodo";
 import { FilterTodo } from "./components/FilterTodo";
 import { addTodoState } from "./states/addTodoState";
-import { RecoilRoot, useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { todoStateLength } from "./states/todoStateLength";
 
 function App() {
@@ -30,25 +30,6 @@ function App() {
       setFilteredTodos(todos.filter((todo) => todo.status === filterStatus));
     }
   }, [todos, filterStatus]);
-
-  // // Todo の追加フィールドの入力をする関数
-  // const handleAddTodoInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setNewTodoTitle(e.target.value);
-  // };
-
-  // // Todoリストに 入力した Todoを追加する関数
-  // const handleAddTodo = () => {
-  //   // 空欄の場合は Todoを追加できないようにする
-  //   if (newTodoTitle === "") {
-  //     return;
-  //   } else {
-  //     setTodos([
-  //       { id: uuidv4(), title: newTodoTitle, status: "未着手" },
-  //       ...todos,
-  //     ]);
-  //     setNewTodoTitle("");
-  //   }
-  // };
 
   // Todoリストを削除する関数
   const handleDeleteTodo = (id: string) => {
