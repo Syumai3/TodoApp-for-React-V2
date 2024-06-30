@@ -3,13 +3,12 @@ import { FilterStatusType, StatusType, Todotype } from "../type/Todotype";
 import { TodoList } from "./components/TodoList";
 import { AddTodo } from "./components/AddTodo";
 import { FilterTodo } from "./components/FilterTodo";
-import { v4 as uuidv4 } from "uuid";
+import { addTodoState } from "./states/addTodoState";
+import { RecoilRoot, useRecoilState } from "recoil";
 
 function App() {
   // Todoリストに表示される todo の状態
-  const [todos, setTodos] = useState<Todotype[]>([]);
-  // 新しく追加する todo の状態
-  const [newTodoTitle, setNewTodoTitle] = useState("");
+  const [todos, setTodos] = useRecoilState(addTodoState);
   // 編集中の todo の id の状態
   const [editingTodoId, setEditingTodoId] = useState<string | null>(null);
   // 編集する todo のタイトルの状態
@@ -28,24 +27,24 @@ function App() {
     }
   }, [todos, filterStatus]);
 
-  // Todo の追加フィールドの入力をする関数
-  const handleAddTodoInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewTodoTitle(e.target.value);
-  };
+  // // Todo の追加フィールドの入力をする関数
+  // const handleAddTodoInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setNewTodoTitle(e.target.value);
+  // };
 
-  // Todoリストに 入力した Todoを追加する関数
-  const handleAddTodo = () => {
-    // 空欄の場合は Todoを追加できないようにする
-    if (newTodoTitle === "") {
-      return;
-    } else {
-      setTodos([
-        { id: uuidv4(), title: newTodoTitle, status: "未着手" },
-        ...todos,
-      ]);
-      setNewTodoTitle("");
-    }
-  };
+  // // Todoリストに 入力した Todoを追加する関数
+  // const handleAddTodo = () => {
+  //   // 空欄の場合は Todoを追加できないようにする
+  //   if (newTodoTitle === "") {
+  //     return;
+  //   } else {
+  //     setTodos([
+  //       { id: uuidv4(), title: newTodoTitle, status: "未着手" },
+  //       ...todos,
+  //     ]);
+  //     setNewTodoTitle("");
+  //   }
+  // };
 
   // Todoリストを削除する関数
   const handleDeleteTodo = (id: string) => {
@@ -104,11 +103,7 @@ function App() {
           justifyContent: "flex-start",
         }}
       >
-        <AddTodo
-          addTodoInput={handleAddTodoInput}
-          newTodoTitle={newTodoTitle}
-          addTodo={handleAddTodo}
-        />
+        <AddTodo />
         <span>絞り込み：</span>
         <FilterTodo filterTodo={handleFilterTodo} />
       </div>

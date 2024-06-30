@@ -1,14 +1,33 @@
 import React from "react";
-
-// Todoを追加するコンポーネントの型情報
-type AddTodoProps = {
-  addTodoInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  newTodoTitle: string;
-  addTodo: () => void;
-};
+import { useRecoilState } from "recoil";
+import { addTodoState } from "../states/addTodoState";
+import { v4 as uuidv4 } from "uuid";
+import { newTodoTitleState } from "../states/newTodoTitleState";
 
 // Todoを追加するコンポーネント
-export function AddTodo({ addTodoInput, newTodoTitle, addTodo }: AddTodoProps) {
+export function AddTodo() {
+  const [todos, setTodos] = useRecoilState(addTodoState);
+  const [newTodoTitle, setNewTodoTitle] = useRecoilState(newTodoTitleState);
+
+  // Todo の追加フィールドの入力をする関数
+  const handleAddTodoInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewTodoTitle(e.target.value);
+  };
+
+  // Todoリストに 入力した Todoを追加する関数
+  const handleAddTodo = () => {
+    // 空欄の場合は Todoを追加できないようにする
+    if (newTodoTitle === "") {
+      return;
+    } else {
+      setTodos([
+        { id: uuidv4(), title: newTodoTitle, status: "未着手" },
+        ...todos,
+      ]);
+      setNewTodoTitle("");
+    }
+  };
+
   return (
     <>
       <div>
@@ -16,9 +35,9 @@ export function AddTodo({ addTodoInput, newTodoTitle, addTodo }: AddTodoProps) {
           type="text"
           style={{ marginRight: "5px" }}
           value={newTodoTitle}
-          onChange={addTodoInput}
+          onChange={handleAddTodoInput}
         />
-        <button onClick={addTodo}>追加</button>
+        <button onClick={handleAddTodo}>追加</button>
       </div>
     </>
   );
