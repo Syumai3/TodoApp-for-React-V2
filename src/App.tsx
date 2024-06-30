@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { FilterStatusType, StatusType, Todotype } from "../type/Todotype";
+import { TodoList } from "./components/TodoList";
+import { AddTodo } from "./components/AddTodo";
+import { FilterTodo } from "./components/FilterTodo";
 
 function App() {
   // Todoリストに表示される todo の状態
@@ -125,113 +128,6 @@ function App() {
         />
       </div>
     </div>
-  );
-}
-
-type TodoListProps = {
-  todos: Todotype[];
-  deleteTodo: (id: number) => void;
-  editingTodoId: number | null;
-  editTodoTitle: string;
-  editTodoInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  openEditForm: (id: number, title: string) => void;
-  closeEditForm: () => void;
-  editTodo: (id: number) => void;
-  editStatus: (id: number, status: StatusType) => void;
-};
-// Todoリストを表示するコンポーネント
-function TodoList({
-  todos,
-  deleteTodo,
-  editingTodoId,
-  editTodoTitle,
-  editTodoInput,
-  openEditForm,
-  closeEditForm,
-  editTodo,
-  editStatus,
-}: TodoListProps) {
-  return (
-    <ul>
-      {todos.map((todo) =>
-        // editingTodoId が存在する (todo の idと一致する)場合に、以下の 編集用のフォームを表示させる処理
-        editingTodoId === todo.id ? (
-          <li>
-            <input type="text" value={editTodoTitle} onChange={editTodoInput} />
-            {/* handleEditTodo関数の処理を実行 */}
-            <button onClick={() => editTodo(todo.id)}>完了</button>
-            <button onClick={closeEditForm}>キャンセル</button>
-          </li>
-        ) : (
-          <li
-            key={todo.id}
-            style={{
-              display: "flex",
-              justifyContent: "flex-start",
-            }}
-          >
-            <select
-              value={todo.status}
-              onChange={(e) =>
-                editStatus(todo.id, e.target.value as StatusType)
-              }
-              style={{ marginRight: "10px" }}
-            >
-              <option value="未着手">未着手</option>
-              <option value="進行中">進行中</option>
-              <option value="完了">完了</option>
-            </select>
-            <span style={{ marginRight: "10px" }}>{todo.title}</span>
-            {/* handleOpenEditForm の処理を実行 */}
-            <button onClick={() => openEditForm(todo.id, todo.title)}>
-              編集
-            </button>
-            <button onClick={() => deleteTodo(todo.id)}>削除</button>
-          </li>
-        )
-      )}
-    </ul>
-  );
-}
-
-// Todoを追加するコンポーネントの型情報
-type AddTodoProps = {
-  addTodoInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  newTodoTitle: string;
-  addTodo: () => void;
-};
-
-// Todoを追加するコンポーネント
-function AddTodo({ addTodoInput, newTodoTitle, addTodo }: AddTodoProps) {
-  return (
-    <>
-      <div>
-        <input
-          type="text"
-          style={{ marginRight: "5px" }}
-          value={newTodoTitle}
-          onChange={addTodoInput}
-        />
-        <button onClick={addTodo}>追加</button>
-      </div>
-    </>
-  );
-}
-
-type FilterTodoProps = {
-  filterTodo: (status: FilterStatusType) => void;
-};
-// Todoをフィルタリングするコンポーネント
-function FilterTodo({ filterTodo }: FilterTodoProps) {
-  return (
-    <>
-      <select onChange={(e) => filterTodo(e.target.value as FilterStatusType)}>
-        <option value="全て">全て</option>
-        <option value="未着手">未着手</option>
-        <option value="進行中">進行中</option>
-        <option value="完了">完了</option>
-      </select>
-    </>
   );
 }
 
