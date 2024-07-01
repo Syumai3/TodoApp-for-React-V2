@@ -81,13 +81,15 @@ function App() {
   };
 
   return (
-    <div style={{ paddingLeft: "10px" }}>
-      <h1>Todoリスト</h1>
-      <span>Todoリストにあるタスク数 : {todoLength}</span>
+    <div className="min-h-screen bg-blue-100 flex flex-col items-center justify-center">
+      <h1 className="text-5xl font-bold text-blue-500 p-5">Todoリスト</h1>
+      <div className="mb-1">Todoリストにあるタスク数 : {todoLength}</div>
       <div>
         <AddTodo />
-        <span>絞り込み：</span>
-        <FilterTodo filterTodo={handleFilterTodo} />
+        <div className="flex p-3">
+          <div>絞り込み：</div>
+          <FilterTodo filterTodo={handleFilterTodo} />
+        </div>
       </div>
       <div>
         <TodoList

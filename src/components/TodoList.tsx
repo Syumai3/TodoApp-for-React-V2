@@ -30,20 +30,24 @@ export function TodoList({
       {todos.map((todo) =>
         // editingTodoId が存在する (todo の idと一致する)場合に、以下の 編集用のフォームを表示させる処理
         editingTodoId === todo.id ? (
-          <li>
+          <li className="pb-1">
             <input type="text" value={editTodoTitle} onChange={editTodoInput} />
             {/* handleEditTodo関数の処理を実行 */}
-            <button onClick={() => editTodo(todo.id)}>完了</button>
-            <button onClick={closeEditForm}>キャンセル</button>
+            <button
+              onClick={() => editTodo(todo.id)}
+              className="bg-blue-500 text-white hover:bg-blue-700 mr-1 py-1 px-1 rounded"
+            >
+              完了
+            </button>
+            <button
+              onClick={closeEditForm}
+              className="bg-blue-500 text-white hover:bg-blue-700 py-1 px-1 rounded"
+            >
+              キャンセル
+            </button>
           </li>
         ) : (
-          <li
-            key={todo.id}
-            style={{
-              display: "flex",
-              justifyContent: "flex-start",
-            }}
-          >
+          <li key={todo.id} className="pb-1">
             <select
               value={todo.status}
               onChange={(e) =>
@@ -57,10 +61,18 @@ export function TodoList({
             </select>
             <span style={{ marginRight: "10px" }}>{todo.title}</span>
             {/* handleOpenEditForm の処理を実行 */}
-            <button onClick={() => openEditForm(todo.id, todo.title)}>
+            <button
+              onClick={() => openEditForm(todo.id, todo.title)}
+              className="bg-blue-500 text-white hover:bg-blue-700 mr-1 py-1 px-1 rounded"
+            >
               編集
             </button>
-            <button onClick={() => deleteTodo(todo.id)}>削除</button>
+            <button
+              onClick={() => deleteTodo(todo.id)}
+              className="bg-blue-500 text-white hover:bg-blue-700 br-1 py-1 px-1 rounded"
+            >
+              削除
+            </button>
           </li>
         )
       )}

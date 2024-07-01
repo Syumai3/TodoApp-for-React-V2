@@ -33,11 +33,16 @@ export function AddTodo() {
       <div>
         <input
           type="text"
-          style={{ marginRight: "5px" }}
           value={newTodoTitle}
           onChange={handleAddTodoInput}
+          className="py-1 px-3 mr-2 rounded border focus:outline-none"
         />
-        <button onClick={handleAddTodo}>追加</button>
+        <button
+          onClick={handleAddTodo}
+          className="bg-blue-500 text-white hover:bg-blue-700 py-1 px-3 font-bold rounded"
+        >
+          追加
+        </button>
       </div>
     </>
   );
