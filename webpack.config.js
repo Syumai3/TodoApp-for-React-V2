@@ -22,6 +22,10 @@ module.exports = {
         test: /\.tsx?$/, //build対象（loaderを適用するファイル）を指定
         loader: "ts-loader", //適用するloaderを指定
       },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader", "postcss-loader"],
+      },
     ],
   },
   //importの際に省略する対象の拡張子を配列で指定

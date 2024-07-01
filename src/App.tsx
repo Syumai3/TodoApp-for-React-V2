@@ -6,6 +6,7 @@ import { FilterTodo } from "./components/FilterTodo";
 import { addTodoState } from "./states/addTodoState";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { todoStateLength } from "./states/todoStateLength";
+import "./index.css";
 
 function App() {
   // Todoリストに表示される todo の状態
@@ -83,12 +84,7 @@ function App() {
     <div style={{ paddingLeft: "10px" }}>
       <h1>Todoリスト</h1>
       <span>Todoリストにあるタスク数 : {todoLength}</span>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "flex-start",
-        }}
-      >
+      <div>
         <AddTodo />
         <span>絞り込み：</span>
         <FilterTodo filterTodo={handleFilterTodo} />
