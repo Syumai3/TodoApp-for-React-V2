@@ -81,7 +81,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-blue-100 flex flex-col items-center justify-center">
+    <div className="min-h-screen bg-blue-100 flex flex-col items-center ">
       <h1 className="text-5xl font-bold text-blue-500 p-5">Todoリスト</h1>
       <div className="mb-1">Todoリストにあるタスク数 : {todoLength}</div>
       <div>
